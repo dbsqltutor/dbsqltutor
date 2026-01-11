@@ -82,6 +82,28 @@
       padding: 1rem 1.25rem;
       border-radius: 4px;
     }
+    .nav {
+      background: #111827;
+      padding: 0.75rem 1rem;
+      text-align: center;
+    }
+
+    .nav a {
+      color: #fff;
+      margin: 0 1rem;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .nav a:hover {
+      text-decoration: underline;
+    }
+
+    .nav .active {
+      font-weight: 700;
+      text-decoration: underline;
+    }
+    
     footer {
       text-align: center;
       padding: 1.5rem;
@@ -98,10 +120,10 @@
     }
   </style>
 </head>
+  
 <body>
-
-  <nav class="nav">
-  <a href="index.html">Home</a>
+<nav class="nav">
+  <a href="index.html" class="active">Home</a>
   <a href="about.html">About</a>
   <a href="contact.html">Contact</a>
 </nav>
@@ -228,6 +250,7 @@
 
 </body>
 </html>
+
 
 
 
