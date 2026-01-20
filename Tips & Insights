@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tips & Insights – SQL and Databases</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Short, practical tips and insights on SQL, databases, and data modeling to build clarity and confidence.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="site-header">
+            <h1>DB SQL Tutor</h1>
+            <p>Clear, structured tutoring in SQL and databases</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="tips.html" class="active">Tips &amp; Insights</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="content">
+            <h2>Tips &amp; Insights</h2>
+            <p>
+                Learning SQL and understanding how databases really work becomes much easier when concepts are explained
+                clearly and in the right order. This section is where I share short, practical insights on SQL, databases,
+                and data modeling — the same principles I use when tutoring students one‑on‑one.
+            </p>
+            <p>
+                Each tip focuses on one idea at a time. Some are beginner‑friendly fundamentals, others explore intermediate
+                techniques, and some dive into advanced reasoning used in real‑world systems. The goal is always the same:
+                to help you build clarity, structure, and confidence in how you think about data.
+            </p>
+            <p>
+                New tips are added regularly. Below are a few example topics you’ll see here:
+            </p>
+
+            <ul>
+                <li>Why <code>SELECT *</code> hurts performance more than you think</li>
+                <li>INNER vs LEFT JOIN — when each one makes sense</li>
+                <li>How to translate real‑world rules into tables</li>
+                <li>Why normalization reduces anomalies in your data</li>
+                <li>Choosing between natural and surrogate keys</li>
+            </ul>
+
+            <p>
+                As this section grows, you’ll find posts tagged as beginner, intermediate, or advanced, so you can quickly
+                find the level that matches where you are right now.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 DB SQL Tutor. All rights reserved.</p>
+    </footer>
+</body>
+</html>
