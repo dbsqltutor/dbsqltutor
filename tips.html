@@ -190,23 +190,23 @@
 
       <h3>What goes wrong when using the wrong data type:</h3>
       <ul>
-        <li><strong>Poor integrity:</strong> Storing dates as VARCHAR allows inconsistent formats.</li>
-        <li><strong>Invalid values:</strong> VARCHAR columns accept values like <em>'twenty'</em> or <em>'999'</em>.</li>
-        <li><strong>Slower queries:</strong> Type mismatches force conversions and may block index use.</li>
-        <li><strong>Inefficient sorting:</strong> Strings sort incorrectly compared to numbers.</li>
-        <li><strong>Wasted storage:</strong> <code>CHAR(50)</code> for a 2‑digit code inflates row size.</li>
-        <li><strong>Weaker validation:</strong> VARCHAR prices allow entries like <em>'free'</em>.</li>
+        <li><strong>Poor integrity:</strong> Storing dates as VARCHAR allows inconsistent formats like 1/10/2025, 2025/10/1, or January 10, 2025.</li>
+        <li><strong>Invalid values:</strong> A column meant for ages defined as VARCHAR could accept values like <em>‘twenty’</em>, <em>‘20’</em> or <em>‘999’</em>.</li>
+        <li><strong>Slower queries:</strong> Comparing '123' (stored as text) to a number forces the database to convert types, possibly blocking index use.</li>
+        <li><strong>Inefficient sorting:</strong> Sorting '10', '2', '100' as strings gives incorrect order compared to numeric sorting.</li>
+        <li><strong>Wasted storage:</strong> Using <code>CHAR(50)</code> for a 2-digit code inflates row size and reduces page density; use VARCHAR instead.</li>
+        <li><strong>Weaker validation:</strong> A VARCHAR column meant for prices can’t prevent entries like <em>‘free’</em> or <em>‘ten dollars’</em>.</li>
       </ul>
 
       <h3>When using the wrong data length:</h3>
-      <p>For example, storing a person’s age as <code>NUMBER(2)</code> is sufficient. Defining it as <code>NUMBER(5)</code> instead introduces unnecessary overhead:</p>
+      <p>For example, storing a person’s age as <code>NUMBER(2)</code> is sufficient.  However, specifying a length of 5 instead can lead to:</p>
 
       <ul>
         <li>Extra storage for a wider numeric definition.</li>
-        <li>Larger index entries.</li>
-        <li>Reduced block/page density.</li>
-        <li>More work for the engine to handle higher precision.</li>
-        <li>Increased memory and cache usage.</li>
+        <li>Larger index entries, which can slow index scans and lookups.</li>
+        <li>Reduced block/page density because fewer rows fit into each data block.</li>
+        <li>More work for the engine to handle higher precision numeric type than needed.</li>
+        <li>Increased memory and cache usage when moving and comparing the wider value.</li>
       </ul>
 
       <h3>Two simple rules of thumb:</h3>
