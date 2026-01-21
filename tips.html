@@ -91,107 +91,137 @@
   <p>Short, practical lessons on SQL, databases, and data modeling</p>
 </header>
 
-<main class="container">
+<main class="container" style="display: flex; gap: 2rem;">
 
-  <section>
-    <h2>Welcome</h2>
-    <p>
-      Learning SQL and understanding how databases really work becomes much easier when concepts are explained clearly
-      and in the right order. This section is where I share short, practical insights on SQL, databases, and data
-      modeling — the same principles I use when tutoring students one-on-one.
-    </p>
+  <!-- SIDEBAR -->
+  <aside style="
+      width: 240px;
+      flex-shrink: 0;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      padding: 1.5rem;
+      border-radius: 6px;
+      height: fit-content;
+      position: sticky;
+      top: 1.5rem;
+    ">
 
-    <p>
-      Each tip focuses on one idea at a time. Some are beginner-friendly fundamentals, others explore intermediate
-      techniques, and some dive into advanced reasoning used in real-world systems. The goal is always the same:
-      to help you build clarity, structure, and confidence in how you think about data.
-    </p>
+    <h3 style="margin-top: 0; font-size: 1.2rem; color: #111827;">Browse Tips</h3>
 
-    <p>Here are a few example topics you’ll find here:</p>
-
-    <ul>
-      <li>Why <code>SELECT *</code> hurts performance more than you think</li>
-      <li>INNER vs LEFT JOIN — when each one makes sense</li>
-      <li>How to translate real-world rules into tables</li>
-      <li>Why normalization reduces anomalies in your data</li>
-      <li>Choosing between natural and surrogate keys</li>
+    <h4 style="margin-bottom: 0.5rem; color: #374151;">SQL Tips</h4>
+    <ul style="margin-top: 0.3rem;">
+      <li><a href="#sql-tip-1">Why SELECT * Hurts Performance</a></li>
     </ul>
 
-    <p>
-      New tips are added regularly. Check back often as you continue building your SQL, database, and data modeling skills.
-    </p>
-  </section>
-
-  <!-- SQL TIP #1 -->
-  <section>
-    <h2>SQL Tip #1: Why SELECT * Hurts Performance More Than You Think</h2>
-
-    <p>Ever wonder why a query feels slow even when the table isn’t that big? A common culprit is <code>SELECT *</code>. It looks harmless, but it quietly creates several performance problems.</p>
-
-    <h3>What’s really happening when you use SELECT *:</h3>
-    <ul>
-      <li>You return every column from every table in the query — even ones you don’t need. In joins, this can dramatically increase the total amount of data returned.</li>
-      <li>More data means more I/O, more memory use, and more work for the database engine.</li>
-      <li>Wide datatypes (JSON, XML, VARCHAR(MAX), BLOB) make the slowdown even worse.</li>
-      <li>The optimizer may be unable to use covering indexes, forcing extra lookups and slowing execution.</li>
+    <h4 style="margin-bottom: 0.5rem; margin-top: 1.5rem; color: #374151;">Database Tips</h4>
+    <ul style="margin-top: 0.3rem;">
+      <li><a href="#db-tip-1">Choosing the Right Data Types</a></li>
     </ul>
 
-    <h3>A simple rule of thumb:</h3>
-    <p><strong>Only select the columns you actually need.</strong><br>
-    It keeps queries faster, reduces memory use, and makes your intent clearer to anyone reading your code.</p>
+  </aside>
 
-    <h3>Quick example:</h3>
-    <p><strong>Instead of:</strong><br>
-    <code>SELECT * FROM Orders</code></p>
+  <!-- MAIN CONTENT -->
+  <div style="flex: 1;">
 
-    <p><strong>Try:</strong><br>
-    <code>SELECT OrderID, OrderDate, TotalAmount FROM Orders</code></p>
+    <section>
+      <h2>Welcome</h2>
+      <p>
+        Learning SQL and understanding how databases really work becomes much easier when concepts are explained clearly
+        and in the right order. This section is where I share short, practical insights on SQL, databases, and data
+        modeling — the same principles I use when tutoring students one-on-one.
+      </p>
 
-    <p>If you want to build better SQL habits, start by replacing <code>SELECT *</code> with the specific fields you need. It’s a small change that pays off immediately.</p>
-  </section>
+      <p>
+        Each tip focuses on one idea at a time. Some are beginner-friendly fundamentals, others explore intermediate
+        techniques, and some dive into advanced reasoning used in real-world systems. The goal is always the same:
+        to help you build clarity, structure, and confidence in how you think about data.
+      </p>
 
-  <!-- DATABASE TIP #1 -->
-  <section>
-    <h2>Database Tip #1: Why Choosing the Right Data Types Matters</h2>
+      <p>Here are a few example topics you’ll find here:</p>
 
-    <p>Data types matter far more than most people realize. Oversized or inconsistent definitions can lead to wasted storage, slower reads, and weaker data integrity.</p>
+      <ul>
+        <li>Why <code>SELECT *</code> hurts performance more than you think</li>
+        <li>INNER vs LEFT JOIN — when each one makes sense</li>
+        <li>How to translate real-world rules into tables</li>
+        <li>Why normalization reduces anomalies in your data</li>
+        <li>Choosing between natural and surrogate keys</li>
+      </ul>
 
-    <h3>What goes wrong when using the wrong data type:</h3>
-    <ul>
-      <li><strong>Poor integrity:</strong> Storing dates as VARCHAR allows inconsistent formats like <em>1/10/2025</em>, <em>2025/10/1</em>, or <em>January 10, 2025</em>.</li>
-      <li><strong>Invalid values:</strong> A VARCHAR column meant for ages could accept values like <em>'twenty'</em>, <em>'20'</em>, or <em>'999'</em>.</li>
-      <li><strong>Slower queries:</strong> Comparing text to numbers forces type conversion and may prevent index use.</li>
-      <li><strong>Inefficient sorting/filtering:</strong> Sorting strings like <em>'10'</em>, <em>'2'</em>, <em>'100'</em> produces incorrect order compared to numeric sorting.</li>
-      <li><strong>Wasted storage:</strong> Using <code>CHAR(50)</code> for a 2‑digit code inflates row size and reduces page density; <code>VARCHAR</code> is more appropriate.</li>
-      <li><strong>Weaker validation:</strong> A VARCHAR column meant for prices can’t prevent entries like <em>'free'</em> or <em>'ten dollars'</em>.</li>
-    </ul>
+      <p>
+        New tips are added regularly. Check back often as you continue building your SQL, database, and data modeling skills.
+      </p>
+    </section>
 
-    <h3>When using the wrong data length:</h3>
-    <p>For example, storing a person’s age as <code>NUMBER(2)</code> is sufficient. Defining it as <code>NUMBER(5)</code> instead can cause unnecessary overhead:</p>
+    <!-- SQL TIP #1 -->
+    <section id="sql-tip-1">
+      <h2>SQL Tip #1: Why SELECT * Hurts Performance More Than You Think</h2>
 
-    <ul>
-      <li>Extra storage for a wider numeric definition.</li>
-      <li>Larger index entries, which can slow index scans and lookups.</li>
-      <li>Reduced block/page density because fewer rows fit into each data block.</li>
-      <li>More work for the engine to handle a higher‑precision numeric type than needed.</li>
-      <li>Increased memory and cache usage when moving and comparing the wider value.</li>
-    </ul>
+      <p>Ever wonder why a query feels slow even when the table isn’t that big? A common culprit is <code>SELECT *</code>. It looks harmless, but it quietly creates several performance problems.</p>
 
-    <h3>Two simple rules of thumb:</h3>
-    <ol>
-      <li>
-        <strong>Match the data type to the nature of the data.</strong><br>
-        CHAR/VARCHAR for text, NUMBER/INT/DECIMAL for numeric values, DATE/DATETIME for dates and timestamps.
-      </li>
-      <li>
-        <strong>Specify a maximum length that makes sense.</strong><br>
-        For example, using <code>NUMBER(10)</code> for a person’s age is excessive — age will never exceed three digits (and realistically, two).
-      </li>
-    </ol>
-  </section>
+      <h3>What’s really happening when you use SELECT *:</h3>
+      <ul>
+        <li>You return every column from every table in the query — even ones you don’t need.</li>
+        <li>More data means more I/O, more memory use, and more work for the database engine.</li>
+        <li>Wide datatypes (JSON, XML, VARCHAR(MAX), BLOB) make the slowdown even worse.</li>
+        <li>The optimizer may be unable to use covering indexes, forcing extra lookups.</li>
+      </ul>
 
+      <h3>A simple rule of thumb:</h3>
+      <p><strong>Only select the columns you actually need.</strong></p>
+
+      <h3>Quick example:</h3>
+      <p><strong>Instead of:</strong><br>
+      <code>SELECT * FROM Orders</code></p>
+
+      <p><strong>Try:</strong><br>
+      <code>SELECT OrderID, OrderDate, TotalAmount FROM Orders</code></p>
+
+      <div style="margin-top: 2rem; border-top: 1px solid #e5e7eb; padding-top: 1rem;">
+        <a href="#db-tip-1">Next Tip →</a>
+      </div>
+    </section>
+
+    <!-- DATABASE TIP #1 -->
+    <section id="db-tip-1">
+      <h2>Database Tip #1: Why Choosing the Right Data Types Matters</h2>
+
+      <p>Data types matter far more than most people realize. Oversized or inconsistent definitions can lead to wasted storage, slower reads, and weaker data integrity.</p>
+
+      <h3>What goes wrong when using the wrong data type:</h3>
+      <ul>
+        <li><strong>Poor integrity:</strong> Storing dates as VARCHAR allows inconsistent formats.</li>
+        <li><strong>Invalid values:</strong> VARCHAR columns accept values like <em>'twenty'</em> or <em>'999'</em>.</li>
+        <li><strong>Slower queries:</strong> Type mismatches force conversions and may block index use.</li>
+        <li><strong>Inefficient sorting:</strong> Strings sort incorrectly compared to numbers.</li>
+        <li><strong>Wasted storage:</strong> <code>CHAR(50)</code> for a 2‑digit code inflates row size.</li>
+        <li><strong>Weaker validation:</strong> VARCHAR prices allow entries like <em>'free'</em>.</li>
+      </ul>
+
+      <h3>When using the wrong data length:</h3>
+      <p>For example, storing a person’s age as <code>NUMBER(2)</code> is sufficient. Defining it as <code>NUMBER(5)</code> instead introduces unnecessary overhead:</p>
+
+      <ul>
+        <li>Extra storage for a wider numeric definition.</li>
+        <li>Larger index entries.</li>
+        <li>Reduced block/page density.</li>
+        <li>More work for the engine to handle higher precision.</li>
+        <li>Increased memory and cache usage.</li>
+      </ul>
+
+      <h3>Two simple rules of thumb:</h3>
+      <ol>
+        <li><strong>Match the data type to the nature of the data.</strong></li>
+        <li><strong>Specify a maximum length that makes sense.</strong></li>
+      </ol>
+
+      <div style="margin-top: 2rem; border-top: 1px solid #e5e7eb; padding-top: 1rem;">
+        <a href="#sql-tip-1">← Previous Tip</a>
+      </div>
+    </section>
+
+  </div>
 </main>
-
+  
 <footer>
   &copy; <span id="year"></span> db.sql.tutor – Database & SQL Tutoring
 </footer>
