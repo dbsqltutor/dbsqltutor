@@ -186,7 +186,8 @@
     <section id="sql-tip-2">
     <h2>SQL Tip #2 — The Hidden Effects of Using <code>ORDER BY</code> in Views</h2>
 
-    <p>Ever added an <code>ORDER BY</code> inside a view and expected the results to always come out sorted? It feels intuitive… but most DBMS don’t treat views that way. Relying on <code>ORDER BY</code> inside a view can lead to inconsistent results and assumptions that quietly break as your data or execution plans change.</p>
+    <p>Ever added an <code>ORDER BY</code> inside a view and expected the results to always come out sorted?</p> 
+    <p>It feels intuitive… but most DBMS don’t treat views that way. Relying on <code>ORDER BY</code> inside a view can lead to inconsistent results and assumptions that quietly break as your data or execution plans change.</p>
 
     <h3>The real issue</h3>
     <p>A view is a logical query, not a stored, pre-sorted dataset. Nothing inside a view is physically materialized, so there’s no ordering to preserve.</p>
@@ -214,7 +215,7 @@
     <p>This creates the illusion that the view is enforcing the sort. But the moment the optimizer chooses a different plan, the order changes. It wasn’t guaranteed — it was coincidence.</p>
 
     <h3>A simple rule of thumb</h3>
-    <p><strong>If you need sorted results, the outer query must specify <code>ORDER BY</code>.</strong></p>
+    <p>Treat a view like a subquery — use it to shape the data, and let the outer query handle the sorting.</p>
 
     <h3>Quick example</h3>
     <p>You create a view with an <code>ORDER BY</code>, then run:</p>
