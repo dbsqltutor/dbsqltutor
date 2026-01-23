@@ -111,6 +111,7 @@
     <h4 style="margin-bottom: 0.5rem; color: #374151;">SQL Tips</h4>
     <ul style="margin-top: 0.3rem;">
       <li><a href="#sql-tip-1">Why SELECT * Hurts Performance</a></li>
+      <li><a href="#sql-tip-2">Hidden Effects of ORDER BY on Views</a></li>
     </ul>
 
     <h4 style="margin-bottom: 0.5rem; margin-top: 1.5rem; color: #374151;">Database Tips</h4>
@@ -181,6 +182,61 @@
       </div>
     </section>
 
+    <!-- SQL TIP #2 -->
+    <section id="sql-tip-2">
+    <h2>SQL Tip #2 — The Hidden Effects of Using <code>ORDER BY</code> in Views</h2>
+
+    <p>Ever added an <code>ORDER BY</code> inside a view and expected the results to always come out sorted? It feels intuitive… but most DBMS don’t treat views that way. Relying on <code>ORDER BY</code> inside a view can lead to inconsistent results and assumptions that quietly break as your data or execution plans change.</p>
+
+    <h3>The real issue</h3>
+    <p>A view is a logical query, not a stored, pre-sorted dataset. Nothing inside a view is physically materialized, so there’s no ordering to preserve.</p>
+    <p>When you query a view, the DBMS expands its definition like a subquery and then optimizes the entire statement as one unit. During this rewrite, the optimizer may:</p>
+
+    <ul>
+        <li>remove the <code>ORDER BY</code></li>
+        <li>reorder joins</li>
+        <li>push filters down</li>
+        <li>merge the view into the outer query</li>
+    </ul>
+
+    <p>If the <code>ORDER BY</code> inside the view doesn’t affect the logical result, the optimizer is free to ignore it. The logical result is the set of rows returned — not the order in which they appear. Since the <code>ORDER BY</code> inside the view has no effect on which rows are included, it doesn’t influence the logical outcome. As a result, the optimizer can safely drop it during query processing.</p>
+
+    <h3>So why does it look like <code>ORDER BY</code> in a view works?</h3>
+    <p>Because sometimes the optimizer chooses a plan that happens to return rows in the order you expect — usually due to:</p>
+
+    <ul>
+        <li>an index that matches the view’s <code>ORDER BY</code></li>
+        <li>a clustered key aligned with the sort</li>
+        <li>a plan that doesn’t need to reorder rows</li>
+        <li>small data volumes that don’t trigger alternative strategies</li>
+    </ul>
+
+    <p>This creates the illusion that the view is enforcing the sort. But the moment the optimizer chooses a different plan, the order changes. It wasn’t guaranteed — it was coincidence.</p>
+
+    <h3>A simple rule of thumb</h3>
+    <p><strong>If you need sorted results, the outer query must specify <code>ORDER BY</code>.</strong></p>
+
+    <h3>Quick example</h3>
+    <p>You create a view with an <code>ORDER BY</code>, then run:</p>
+
+    <pre><code>SELECT * FROM vwStudents;
+</code></pre>
+
+    <p>Even if the view sorts by <code>Name</code>, this query is <strong>not guaranteed</strong> to return sorted results.</p>
+
+    <p>To ensure sorted output from a view, code your logic as:</p>
+
+    <pre><code>SELECT * 
+FROM (SELECT * FROM vwStudents) AS x
+ORDER BY x.Name;
+</code></pre>
+
+    <p>This works — but not because the view had an <code>ORDER BY</code>. It works because the <strong>outer query</strong> controls the final ordering.</p>
+
+    <h3>Final thought</h3>
+    <p>If your results seem to “randomly” change order when querying a view, the root cause is often a misplaced assumption that the view’s <code>ORDER BY</code> is being enforced. Keep sorting in the outer query where it belongs.</p>
+</section>
+    
     <!-- DATABASE TIP #1 -->
     <section id="db-tip-1">
       <h2>Database Tip #1: Why Choosing the Right Data Types Matters</h2>
