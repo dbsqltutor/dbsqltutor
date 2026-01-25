@@ -112,7 +112,7 @@
     <ul style="margin-top: 0.3rem;">
       <li><a href="#sql-tip-1">Why SELECT * Hurts Performance</a></li>
       <li><a href="#sql-tip-2">Hidden Effects of ORDER BY on Views</a></li>
-      <li><a href="#sql-tip-3">JOIN vs WHERE -- What goes where and Why</a></li>
+      <li><a href="#sql-tip-3">JOIN vs WHERE -- What Goes Where and Why</a></li>
     </ul>
 
     <h4 style="margin-bottom: 0.5rem; margin-top: 1.5rem; color: #374151;">Database Tips</h4>
@@ -268,7 +268,7 @@ ORDER BY x.Name;
 
   <p><strong>Filter inside the JOIN</strong></p>
   <pre><code>JOIN Orders o ON c.CustomerID = o.CustomerID
-  AND c.City = o.City</code></pre>
+AND c.City = o.City</code></pre>
 
   <p><strong>Filter inside the WHERE</strong></p>
   <pre><code>JOIN Orders o ON c.CustomerID = o.CustomerID
@@ -284,7 +284,7 @@ WHERE c.City = o.City</code></pre>
 
   <h3>LEFT JOIN + AND (Filtering affects row matching)</h3>
   <pre><code>LEFT JOIN Orders o ON c.CustomerID = o.CustomerID
-  AND c.City = o.City</code></pre>
+AND c.City = o.City</code></pre>
 
   <ul>
     <li>The ON clause defines the row-matching rule</li>
