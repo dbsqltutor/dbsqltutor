@@ -268,7 +268,7 @@ ORDER BY x.Name;
 
   <p><strong>Filter inside the JOIN</strong></p>
   <pre><code>JOIN Orders o ON c.CustomerID = o.CustomerID
-              AND c.City = o.City</code></pre>
+  AND c.City = o.City</code></pre>
 
   <p><strong>Filter inside the WHERE</strong></p>
   <pre><code>JOIN Orders o ON c.CustomerID = o.CustomerID
@@ -284,7 +284,7 @@ WHERE c.City = o.City</code></pre>
 
   <h3>LEFT JOIN + AND (Filtering affects row matching)</h3>
   <pre><code>LEFT JOIN Orders o ON c.CustomerID = o.CustomerID
-                   AND c.City = o.City</code></pre>
+  AND c.City = o.City</code></pre>
 
   <ul>
     <li>The ON clause defines the row-matching rule</li>
