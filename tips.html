@@ -112,6 +112,7 @@
     <ul style="margin-top: 0.3rem;">
       <li><a href="#sql-tip-1">Why SELECT * Hurts Performance</a></li>
       <li><a href="#sql-tip-2">Hidden Effects of ORDER BY on Views</a></li>
+      <li><a href="#sql-tip-3">JOIN vs WHERE -- What goes where and Why</a></li>
     </ul>
 
     <h4 style="margin-bottom: 0.5rem; margin-top: 1.5rem; color: #374151;">Database Tips</h4>
@@ -236,6 +237,94 @@ ORDER BY x.Name;
 
     <h3>Final thought</h3>
     <p>If your results seem to “randomly” change order when querying a view, the root cause is often a misplaced assumption that the view’s <code>ORDER BY</code> is being enforced. Keep sorting in the outer query where it belongs.</p>
+</section>
+
+    <!-- SQL TIP #3 -->
+<section id="sql-tip-3">
+  <h2>SQL Tip #3: JOIN vs WHERE — What Goes Where, and Why It Matters</h2>
+
+  <p>
+    SQL won’t stop you from misusing <code>ON</code> and <code>WHERE</code> — it’ll just give you unpredictable results when you least expect them.
+    When writing joins, it’s easy to mix up what belongs in the <code>ON</code> clause and what belongs in the <code>WHERE</code> clause.
+    A simple rule keeps everything clean:
+  </p>
+
+  <h3>ON vs WHERE — The Core Idea</h3>
+  <ul>
+    <li><strong>(join) ON:</strong> defines how tables relate (PK/FK)</li>
+    <li><strong>WHERE:</strong> defines which rows survive after the join</li>
+  </ul>
+
+  <p>Think of it this way:</p>
+  <ul>
+    <li><strong>ON = relationship logic</strong></li>
+    <li><strong>WHERE = filtering logic</strong></li>
+  </ul>
+
+  <p>This mental model prevents subtle bugs — especially with outer joins.</p>
+
+  <h3>INNER JOIN: Filter in ON vs Filter in WHERE</h3>
+  <p>For INNER JOINs, these two patterns behave the same:</p>
+
+  <p><strong>Filter inside the JOIN</strong></p>
+  <pre><code>JOIN Orders o ON c.CustomerID = o.CustomerID
+              AND c.City = o.City</code></pre>
+
+  <p><strong>Filter inside the WHERE</strong></p>
+  <pre><code>JOIN Orders o ON c.CustomerID = o.CustomerID
+WHERE c.City = o.City</code></pre>
+
+  <p>
+    Both return the same rows (NULLs aside) because INNER JOIN only keeps rows that satisfy both conditions.
+    This is why INNER JOIN isn’t ideal for showing the ON vs WHERE difference.
+  </p>
+
+  <h3>LEFT/RIGHT/FULL JOIN: Where the Difference Actually Matters</h3>
+  <p>Outer joins preserve unmatched rows — and that’s where ON vs WHERE diverge.</p>
+
+  <h3>LEFT JOIN + AND (Filtering affects row matching)</h3>
+  <pre><code>LEFT JOIN Orders o ON c.CustomerID = o.CustomerID
+                   AND c.City = o.City</code></pre>
+
+  <ul>
+    <li>The ON clause defines the row-matching rule</li>
+    <li>If the city comparison fails (including NULL), the row simply doesn’t match</li>
+    <li>But because it’s a LEFT JOIN, the left row still returns with NULLs on the right</li>
+  </ul>
+
+  <p>This preserves the core LEFT JOIN behavior: return all rows from the left table.</p>
+
+  <h3>LEFT JOIN + WHERE (Filtering affects row survival)</h3>
+  <pre><code>LEFT JOIN Orders o ON c.CustomerID = o.CustomerID
+WHERE c.City = o.City</code></pre>
+
+  <ul>
+    <li>The LEFT JOIN first returns matched + unmatched rows</li>
+    <li>The WHERE clause filters afterward</li>
+    <li>Unmatched rows fail the comparison and are removed</li>
+  </ul>
+
+  <p>This effectively turns the LEFT JOIN into an INNER JOIN.</p>
+
+  <h3>Closing Thought</h3>
+  <p>
+    Use <code>ON</code> to describe how tables connect.<br>
+    Use <code>WHERE</code> to filter the final result set.
+  </p>
+
+  <p>
+    For INNER JOINs, both approaches look the same.<br>
+    For LEFT, RIGHT, and FULL OUTER JOINs, they behave very differently — and understanding that distinction is essential for predictable SQL.
+  </p>
+
+  <h3>One Last Best Practice</h3>
+  <p><strong>Avoid using WHERE to join tables.</strong><br>
+     Always join using <code>JOIN … ON</code> — it keeps your intent clear and your outer joins behaving as expected.
+  </p>
+
+  <div style="margin-top: 2rem; border-top: 1px solid #e5e7eb; padding-top: 1rem;">
+    <a href="#sql-tip-1">Back to Top ?</a>
+  </div>
 </section>
     
     <!-- DATABASE TIP #1 -->
