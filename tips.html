@@ -375,137 +375,215 @@ WHERE c.City = o.City</code></pre>
       </div>
     </section>
 
-    <!-- DATA MODELING TIP #1 -->
-    <section id="dm-tip-1">
-      <h2>Data Modeling Tip #1: Conceptual, Logical, and Physical Models</h2>
+<!-- DATA MODELING TIP #1 -->
+<section id="dm-tip-1">
+  <h2>Data Modeling Tip #1: Conceptual, Logical, and Physical Models</h2>
 
-      <p>
-        A solid database doesn’t begin with tables — it begins with understanding the business. Data modeling gives you
-        a structured path from idea to schema, moving through three layers:
-      </p>
+  <p>
+    A solid database doesn't begin with tables — it begins with understanding the business. 
+    Data modeling gives you a structured path from idea to schema, moving through three layers:
+  </p>
 
-      <ul>
-        <li><strong>Conceptual</strong></li>
-        <li><strong>Logical</strong></li>
-        <li><strong>Physical</strong></li>
-      </ul>
+  <ul>
+    <li>Conceptual</li>
+    <li>Logical</li>
+    <li>Physical</li>
+  </ul>
 
-      <p>
-        Each layer answers a different question: what the business needs, how the data fits together, and how it will be
-        implemented. When these layers are skipped or blurred, teams end up with mismatched assumptions, duplicated data,
-        and systems that are hard to maintain.
-      </p>
+  <p>
+    Each layer answers a different question — what the business needs, how the data fits together, 
+    and how it will be implemented; adding more detail and precision at each step.
+  </p>
 
-      <h3>Conceptual model – the business view</h3>
-      <p>
-        The conceptual model is the highest-level view. It captures what the business cares about, without technical detail.
-        Think of it like a city map that shows neighborhoods but not street names — it gives orientation without overwhelming detail.
-      </p>
+  <p>
+    Data modeling isn't just documentation — it's how you prevent rework, miscommunication, and 
+    inconsistent data structures. When these layers are skipped or blurred, teams end up with 
+    mismatched assumptions, duplicated data, and systems that are hard to maintain.
+  </p>
 
-      <h4>Focus:</h4>
-      <ul>
-        <li><strong>Major entities:</strong> Customer, Order, Product</li>
-        <li><strong>High-level relationships:</strong> Customers place Orders</li>
-        <li><strong>No attributes, keys, or data types</strong></li>
-      </ul>
+  <h3>Conceptual Model — The Business View</h3>
 
-      <h4>Purpose:</h4>
-      <p>
-        Align business stakeholders on the core “things” the system must track. Once the business concepts are clear,
-        we can safely add structure.
-      </p>
+  <p>
+    This is the highest-level model. It captures what the business cares about, without technical detail.
+    A conceptual model is like a city map that shows neighborhoods but not street names — it gives 
+    orientation without overwhelming detail.
+  </p>
 
-      <h3>Logical model – the structural blueprint</h3>
-      <p>
-        The logical model is where the design becomes detailed and structured, but still independent of any specific database platform.
-      </p>
+  <h4>Focus:</h4>
+  <ul>
+    <li>Major entities (Customer, Order, Product)</li>
+    <li>High-level relationships (Customers place Orders)</li>
+    <li>No attributes, no keys, no data types</li>
+  </ul>
 
-      <h4>Focus:</h4>
-      <ul>
-        <li><strong>Entities and attributes</strong></li>
-        <li><strong>Primary keys and candidate keys</strong></li>
-        <li><strong>Relationship cardinalities:</strong> 1:1, 1:M, M:N</li>
-        <li><strong>Normalization and business rules</strong></li>
-      </ul>
+  <h4>Purpose:</h4>
+  <p>
+    Align business stakeholders on the core “things” the system must track.  
+    Once the business concepts are clear, we can add structure.
+  </p>
 
-      <p>
-        Normalization ensures each fact is stored once, in the right place, reducing redundancy and improving data integrity.
-        The logical model is where these rules take shape.
-      </p>
+  <h3>Logical Model — The Structural Blueprint</h3>
 
-      <h4>Purpose:</h4>
-      <p>
-        Define how the data fits together logically. Entities remain entities, attributes are fully defined, and keys and
-        relationships are introduced — but nothing is tied to Oracle, SQL Server, PostgreSQL, MySQL, or any specific DBMS.
-        It’s the “what” and “how,” not the “where.”
-      </p>
+  <p>
+    This is where the model becomes detailed and structured, but still independent of any specific 
+    database platform.
+  </p>
 
-      <h3>Physical model – the database implementation</h3>
-      <p>
-        The physical model is the version that becomes the actual database schema.
-      </p>
+  <h4>Focus:</h4>
+  <ul>
+    <li>Entities and their attributes</li>
+    <li>Primary keys and candidate keys</li>
+    <li>Relationship cardinalities (1:1, 1‑M, M:N)</li>
+    <li>Normalization and business rules</li>
+  </ul>
 
-      <h4>Focus:</h4>
-      <ul>
-        <li><strong>Tables and columns</strong></li>
-        <li><strong>Data types</strong></li>
-        <li><strong>Indexes, constraints, foreign keys</strong></li>
-        <li><strong>Naming conventions:</strong> consistent patterns like <code>customer_id</code>, <code>order_id</code></li>
-        <li><strong>Platform-specific considerations:</strong> SQL Server, PostgreSQL, MySQL, etc.</li>
-      </ul>
+  <p>
+    Normalization ensures each fact is stored once, in the right place, reducing redundancy and 
+    improving data integrity. The logical model is where these rules take shape.
+  </p>
 
-      <h4>Purpose:</h4>
-      <p>
-        Translate the logical design into a working, optimized database. Entities become tables, attributes become columns,
-        and relationships are enforced through foreign keys and constraints. This is also where performance considerations
-        like indexing strategies, storage formats, and partitioning come into play.
-      </p>
+  <h4>Purpose:</h4>
+  <p>
+    Define how the data fits together logically.
+  </p>
 
-      <h3>Example across all three layers</h3>
-      <p><strong>Conceptual:</strong></p>
-      <p>
-        <code>CUSTOMERS</code>, <code>ORDERS</code>, <code>PRODUCTS</code><br>
-        (Entities and relationships only)
-      </p>
+  <p>Where entities and attributes fit:</p>
+  <ul>
+    <li>Entities remain entities</li>
+    <li>Attributes are now fully defined</li>
+    <li>Still no tables or columns — this is platform‑agnostic</li>
+    <li>Keys and relationships are introduced to define identity and structure</li>
+  </ul>
 
-      <p><strong>Logical:</strong></p>
-      <p>
-        Entities with attributes, keys, and relationships, for example:
-      </p>
-      <ul>
-        <li><strong>CUSTOMERS:</strong> <code>customer_id</code> (PK), <code>customer_name</code>, <code>customer_contact</code></li>
-        <li><strong>ORDERS:</strong> <code>order_id</code> (PK), <code>customer_id</code> (FK), <code>order_date</code>, <code>order_total</code></li>
-        <li><strong>PRODUCTS:</strong> <code>product_id</code> (PK), <code>product_description</code>, <code>product_msrp</code></li>
-        <li><strong>ORDER_ITEMS:</strong> <code>order_id</code> (PK/FK), <code>order_item_id</code> (PK), <code>product_id</code> (FK), <code>quantity</code></li>
-      </ul>
+  <p>
+    At the logical stage, nothing is tied to Oracle, SQL Server, PostgreSQL, MySQL, or any specific DBMS.  
+    It’s the “what” and “how,” not the “where.”
+  </p>
 
-      <p><strong>Physical:</strong></p>
-      <p>
-        Tables, columns, data types, and constraints, for example:
-      </p>
-      <ul>
-        <li><strong>CUSTOMERS:</strong> <code>customer_id numeric(8)</code>, <code>customer_name varchar2(50)</code>, <code>customer_contact varchar2(50)</code></li>
-        <li><strong>ORDERS:</strong> <code>order_id numeric(8)</code>, <code>customer_id numeric(8)</code>, <code>order_date date</code>, <code>order_total numeric(8,2)</code></li>
-        <li><strong>PRODUCTS:</strong> <code>product_id numeric(8)</code>, <code>product_description varchar2(100)</code>, <code>product_msrp numeric(6,2)</code></li>
-        <li><strong>ORDER_ITEMS:</strong> <code>order_id numeric(8)</code>, <code>order_item_id numeric(8)</code>, <code>product_id numeric(8)</code>, <code>quantity numeric(3)</code></li>
-      </ul>
+  <h3>Physical Model — The Database Implementation</h3>
 
-      <h3>Final thoughts</h3>
-      <p>
-        Conceptual models define the things. Logical models define the details. Physical models define the implementation.
-        Get that flow right, and your data model becomes clear, scalable, and easier to maintain.
-      </p>
+  <p>
+    This is the model that becomes the actual database schema.
+  </p>
 
-      <h3>Quick disclaimer</h3>
-      <p>
-        It’s common to hear people refer to entities as “tables” and attributes as “columns” even when discussing conceptual
-        or logical models. That’s everyday shorthand — just be aware of which layer you’re actually working in.
-      </p>
+  <h4>Focus:</h4>
+  <ul>
+    <li>Tables and columns</li>
+    <li>Data types</li>
+    <li>Indexes, constraints, foreign keys</li>
+    <li>Naming conventions (e.g., <code>customer_id</code>, <code>order_id</code>)</li>
+    <li>Platform‑specific considerations (SQL Server, PostgreSQL, MySQL, etc.)</li>
+  </ul>
 
-      <div style="margin-top: 2rem; border-top: 1px solid #e5e7eb; padding-top: 1rem;">
-        <a href="#sql-tip-1">Back to Top →</a>
-      </div>
-    </section>
+  <h4>Purpose:</h4>
+  <p>
+    Translate the logical design into a working, optimized database.
+  </p>
+
+  <p>Where entities and attributes fit:</p>
+  <ul>
+    <li>Entities become tables</li>
+    <li>Attributes become columns</li>
+    <li>Relationships become foreign keys</li>
+    <li>Keys become PK/FK constraints and indexes</li>
+  </ul>
+
+  <p>
+    This is the stage where the abstract becomes concrete.  
+    The physical model introduces performance considerations: indexing strategies, storage formats, 
+    partitioning, and naming conventions that support long‑term maintainability.
+  </p>
+
+  <h3>Example Across All Three Layers</h3>
+
+  <h4>Conceptual:</h4>
+  <figure>
+    <pre>
+CUSTOMERS
+ORDERS
+PRODUCTS
+    </pre>
+  </figure>
+  <p>Entities and relationships only.</p>
+
+  <h4>Logical:</h4>
+  <figure>
+    <pre>
+CUSTOMERS              ORDERS
+customer_id (P)        order_id (P)
+customer_name          customer_id (F)
+customer_contact       order_date
+                       order_total
+
+PRODUCTS               ORDER_ITEMS
+product_id (P)         order_id (PF)
+product_description    order_item_id (P)
+product_msrp           product_id (F)
+                       quantity
+    </pre>
+  </figure>
+  <p>Entities, attributes, relationships, keys.</p>
+
+  <h4>Physical:</h4>
+
+  <figure>
+    <pre>
+CUSTOMERS
+PK  customer_id        numeric(8)
+    customer_name      varchar2(50)
+    customer_contact   varchar2(50)
+    </pre>
+  </figure>
+
+  <table>
+    <tr><th colspan="3">ORDERS</th></tr>
+    <tr><th>PK</th><th>order_id</th><th>numeric(8)</th></tr>
+    <tr><td rowspan="3">FK</td><td>customer_id</td><td>numeric(8)</td></tr>
+    <tr><td>order_date</td><td>date</td></tr>
+    <tr><td>order_total</td><td>numeric(8,2)</td></tr>
+  </table>
+
+  <table>
+    <tr><th colspan="3">PRODUCTS</th></tr>
+    <tr><th>PK</th><th colspan="2">product_id numeric(8)</th></tr>
+    <tr><td></td><td>product_description</td><td>varchar2(100)</td></tr>
+    <tr><td></td><td>product_msrp</td><td>numeric(6,2)</td></tr>
+  </table>
+
+  <table>
+    <tr><th colspan="3">ORDER_ITEMS</th></tr>
+    <tr><th rowspan="2">PK/FK</th><th>order_id</th><th>numeric(8)</th></tr>
+    <tr><th>order_item_id</th><th>numeric(8)</th></tr>
+    <tr><td rowspan="3">FK</td><td>product_id</td><td>numeric(8)</td></tr>
+    <tr><td>quantity</td><td>numeric(3)</td></tr>
+    <tr><td></td><td></td></tr>
+  </table>
+
+  <p>Tables, columns, relationships, keys, datatypes.</p>
+
+  <h3>Final Thoughts</h3>
+  <p>
+    Conceptual models define the things.<br>
+    Logical models define the details.<br>
+    Physical models define the implementation.<br>
+    Entities become tables.<br>
+    Attributes become columns.
+  </p>
+
+  <p>
+    Get that flow right, and your data model becomes clear, scalable, and easy to maintain.
+  </p>
+
+  <h3>Quick Disclaimer</h3>
+  <p>
+    It's common to hear people refer to entities as “tables” and attributes as “columns” even when discussing 
+    conceptual or logical models. It’s everyday shorthand — just be aware of which layer you’re actually working in.
+  </p>
+
+  <div style="margin-top: 2rem; border-top: 1px solid #e5e7eb; padding-top: 1rem;">
+    <a href="#sql-tip-1">Back to Top →</a>
+  </div>
+</section>
 
   </div>
 </main>
