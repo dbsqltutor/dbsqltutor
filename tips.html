@@ -403,8 +403,8 @@ WHERE c.City = o.City</code></pre>
 
   <h3>Conceptual Model — The Business View</h3>
 
+  <p>This is the highest-level model. It captures what the business cares about, without technical detail.</p>
   <p>
-    This is the highest-level model. It captures what the business cares about, without technical detail.
     A conceptual model is like a city map that shows neighborhoods but not street names — it gives 
     orientation without overwhelming detail.
   </p>
@@ -417,10 +417,8 @@ WHERE c.City = o.City</code></pre>
   </ul>
 
   <h4>Purpose:</h4>
-  <p>
-    Align business stakeholders on the core “things” the system must track.  
-    Once the business concepts are clear, we can add structure.
-  </p>
+  <p>Align business stakeholders on the core “things” the system must track.</p>  
+  <p>Once the business concepts are clear, we can proceed to the logica lmodel to add structure...</p>
 
   <h3>Logical Model — The Structural Blueprint</h3>
 
@@ -459,6 +457,8 @@ WHERE c.City = o.City</code></pre>
     At the logical stage, nothing is tied to Oracle, SQL Server, PostgreSQL, MySQL, or any specific DBMS.  
     It’s the “what” and “how,” not the “where.”
   </p>
+  <p>With the logical rules defined, we can now translate the design into a real database in the physicala model...</p>
+
 
   <h3>Physical Model — The Database Implementation</h3>
 
@@ -488,8 +488,8 @@ WHERE c.City = o.City</code></pre>
     <li>Keys become PK/FK constraints and indexes</li>
   </ul>
 
+  <p>This is the stage where the abstract becomes concrete.</p>  
   <p>
-    This is the stage where the abstract becomes concrete.  
     The physical model introduces performance considerations: indexing strategies, storage formats, 
     partitioning, and naming conventions that support long‑term maintainability.
   </p>
@@ -566,6 +566,8 @@ PK  customer_id        numeric(8)
     Conceptual models define the things.<br>
     Logical models define the details.<br>
     Physical models define the implementation.<br>
+  </p> 
+  <p>
     Entities become tables.<br>
     Attributes become columns.
   </p>
