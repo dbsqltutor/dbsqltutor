@@ -118,6 +118,7 @@
     <h4 style="margin-bottom: 0.5rem; margin-top: 1.5rem; color: #374151;">Database Tips</h4>
     <ul style="margin-top: 0.3rem;">
       <li><a href="#db-tip-1">Choosing the Right Data Types</a></li>
+      <li><a href="#db-tip-2">How the Optimizer Uses Indexes</a></li>
     </ul>
 
     <h4 style="margin-bottom: 0.5rem; margin-top: 1.5rem; color: #374151;">Data Modeling Tips</h4>
@@ -382,6 +383,88 @@ WHERE c.City = o.City</code></pre>
         <a href="#sql-tip-1">← Previous Tip</a>
       </div>
     </section>
+
+    <!-- DATABASE TIP #2 -->
+    <!-- DATABASE TIP #2 -->
+    <!-- DATABASE TIP #2 -->
+    <section id="db-tip-2">
+
+  <h2>How the Optimizer Chooses Between an Index Seek and a Table Scan</h2>
+
+  <p>
+    Understanding why a database optimizer chooses an index seek in some cases and a full scan in others 
+    is one of the most important mental models in query tuning. Yet it’s also one of the most misunderstood. 
+    Many people assume seeks are always “good” and scans are always “bad,” but the optimizer is far more 
+    strategic than that.
+  </p>
+
+  <p>
+    At the heart of every access‑path decision is a single idea: 
+    <strong>how much of the table the query is expected to touch</strong>. 
+    Once you understand that, the optimizer’s behavior becomes predictable — and tuning becomes a whole lot easier.
+  </p>
+
+  <p>
+    Below is a simple decision flow that shows how most cost‑based optimizers think about seeks vs. scans.
+  </p>
+
+  <h3>Decision Flow: Table Scan vs. Index Seek</h3>
+
+  <h4>Conceptual:</h4>
+  <img src="How Optimizer Uses Indexes.png" alt="How Optimizer Uses Indexes diagram">
+ 
+  <ol>
+    <li><strong>Query</strong></li>
+
+    <li>
+      <strong>Filter present?</strong><br>
+      NO → <strong>Table Scan</strong><br>
+      YES → continue
+    </li>
+
+    <li>
+      <strong>Filter column indexed?</strong><br>
+      NO → <strong>Table Scan</strong><br>
+      YES → continue
+    </li>
+
+    <li>
+      <strong>Determine number of rows matched (selectivity)</strong>
+    </li>
+
+    <li>
+      <strong>Selectivity high or low?</strong><br>
+      HIGH → <strong>Index Seek</strong><br>
+      LOW → continue
+    </li>
+
+    <li>
+      <strong>Compare cost of:</strong><br>
+      seek (+ many random lookups) vs. scan (sequential I/O)
+    </li>
+
+    <li>
+      <strong>Scan cheaper than seek?</strong><br>
+      YES → <strong>Table Scan</strong><br>
+      NO → <strong>Index Seek</strong>
+    </li>
+  </ol>
+
+  <h3>The Core Principle</h3>
+
+  <p>
+    <strong>Indexes help only when they allow the optimizer to avoid reading non‑qualifying data.</strong>
+  </p>
+
+  <p>
+    If most pages contain rows that match the filter, the index can’t skip much — and a scan becomes cheaper. 
+    If only a small portion of the table qualifies, a seek is the more efficient path.
+  </p>
+
+  <p>
+    This is why seeks and scans aren’t “good” or “bad” — they’re simply cost‑based decisions.
+  </p>
+</section>
 
 <!-- DATA MODELING TIP #1 -->
 <!-- DATA MODELING TIP #1 -->
