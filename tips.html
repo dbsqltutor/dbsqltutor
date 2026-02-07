@@ -110,20 +110,20 @@
 
     <h4 style="margin-bottom: 0.5rem; color: #374151;">SQL Tips</h4>
     <ul style="margin-top: 0.3rem;">
-      <li><a href="#sql-tip-1">Why SELECT * Hurts Performance</a></li>
-      <li><a href="#sql-tip-2">Hidden Effects of ORDER BY on Views</a></li>
-      <li><a href="#sql-tip-3">JOIN vs WHERE -- What Goes Where and Why</a></li>
+      <li><a href="#sql-tip-1">1: Why SELECT * Hurts Performance</a></li>
+      <li><a href="#sql-tip-2">2: Hidden Effects of ORDER BY on Views</a></li>
+      <li><a href="#sql-tip-3">3: JOIN vs WHERE -- What Goes Where and Why</a></li>
     </ul>
 
     <h4 style="margin-bottom: 0.5rem; margin-top: 1.5rem; color: #374151;">Database Tips</h4>
     <ul style="margin-top: 0.3rem;">
-      <li><a href="#db-tip-1">Choosing the Right Data Types</a></li>
-      <li><a href="#db-tip-2">How Optimizer Uses Indexes</a></li>
+      <li><a href="#db-tip-1">1: Choosing the Right Data Types</a></li>
+      <li><a href="#db-tip-2">2: How Optimizer Uses Indexes</a></li>
     </ul>
 
     <h4 style="margin-bottom: 0.5rem; margin-top: 1.5rem; color: #374151;">Data Modeling Tips</h4>
     <ul style="margin-top: 0.3rem;">
-      <li><a href="#dm-tip-1">Conceptual, Logical, and Physical Models</a></li>
+      <li><a href="#dm-tip-1">1: Conceptual, Logical, and Physical Models</a></li>
     </ul>
 
   </aside>
@@ -389,7 +389,7 @@ WHERE c.City = o.City</code></pre>
 <!-- DATABASE TIP #2 -->
 <section id="db-tip-2">
 
-  <h2>Database Tip #2 — How the Optimizer Uses Indexes</h2>
+  <h2>Database Tip #2: How the Optimizer Uses Indexes</h2>
 
   <p>
     Understanding why a database optimizer chooses an index seek in some cases and a full scan in others
@@ -488,11 +488,14 @@ WHERE c.City = o.City</code></pre>
   <h3>Takeaway</h3>
 
   <p>
-    <strong>Indexes improve performance by reducing the amount of data the DBMS must read.</strong>
+    Indexes improve performance by reducing the amount of data the DBMS must read.
   </p>
 
   <p>
     If the filter is highly selective, a seek is efficient.
+  </p>
+    
+  <p>
     If the filter returns many rows — or there’s no filter at all — a scan becomes the cheapest option.
   </p>
 
